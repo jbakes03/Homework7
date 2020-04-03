@@ -111,11 +111,12 @@ public class Catelog {
             //creates new node
             Node flagger = new Node(show);
             Node temporary = new Node(show);
+                        
+            current = head.prev;
             temporary = head;
             head = flagger;
             flagger = temporary;
-            
-            current = head.prev;
+
             //head is the new show, flagger was the previous that was added
             head.next = flagger;
             head.prev = current;
