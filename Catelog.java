@@ -63,31 +63,139 @@ public class Catelog {
     }
 
     public boolean addToFront(String show) {
+        //return nothing if its null
+        if(show == null){
+            return false;
+        }
+        //checks if catalog is empty
+        if(head == null){
+            //creates new node
+            Node flagger = new Node(show);
+            flagger.next = flagger;
+            flagger.prev = flagger;
+            head = flag;
+            current = head;
+            return true;
+        } 
+        //checks for existing list with only 1 show
+        if(head.next == head) {
+            //if its adding same show it will fail
+            if(head.data.show == show){
+                return false;
+            }
+            //if it's not the same then add new node
+            Node flagger = new Node(show);
+            Node temporary = new Node(show);
+            temporary = head;
+            head = flagger;
+            flagger = temporary;
+            //set the pointers equal to eachother
+            head.next = flag;
+            head.prev = flag;
+            return true;
+        }
+        current = head;
+        //Checks for list with multiple shows
+        If(current.data.show == show){
+            returne false;
+           
+        }
+        while(current.next != head){
+            //looks to see if show already exists
+            if(current.data.show == show){
+                return false;
+            }
+            current = current.next;
+        }
+        if(head != null){
+            //creates new node
+            Node flagger = new Node(show);
+            Node temporary = new Node(show);
+            temporary = head;
+            head = flagger;
+            flagger = temporary;
+            
+            current = head.prev;
+            //head is the new show, flagger was the previous that was added
+            head.next = flagger;
+            head.prev = current;
+            flagger.prev = head;
+            current.next = head;
+            
+            return true;
+        }
         return false;
     }
 
     public boolean removeShow(String show) {
-        return false;
-    }
+        //Look to see if nothing is passed to return false
+        if(show == null){
+            return false;
+        }
+        //checks for empty catalog
+        if(head == null){
+            return false;
+        }
+        //Removes the only show
+        if(head == head.next){
+            if((head.data.show == show) && (head != head.next)){
+                current = head.prev;
+                head = head.next;
+                head.prev = current;
+                current.next = head;
+            }
+            while(current.next != head){
+                //This loop goes around looking for already  existing show
+                if(current.data.show == show){
+                    check = true;
+                    current = current.next;
+                    current.prev = current.prev.prev;
+                    return true;
+                }
+                current = current.next;
+            }
+            return false;
+        }
 
     public void clear() {
+        //sets all = to null
+        head.next = null;
+        head.prev = null;
+        head = null;
+        current = null;
 
     }
 
     public boolean isEmpty() {
-        return true;
+        //checks for empty
+        if(head == null){
+            return true;
+        }
+        return false;
     }
 
     public String getCurrentShow() {
-        return null;
+        //checks for empty list, if so failure
+        if((head == null) || (current == null)){
+            return null;
+        }
+        return current.toString();
     }
 
     public String stepForward() {
-        return null;
+        if((current==null)||(head==null)){
+            return null;
+        }
+        current = current.next;
+        return current.toString();
     }
 
     public String stepBackward() {
-        return null;
+        if((current==null)||(head==null)){
+            return null;
+        }
+        current = current.prev;
+        return current.toString();
     }
 
 
